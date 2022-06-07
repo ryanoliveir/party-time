@@ -36,7 +36,69 @@ const getAll = async () => {
 
 }
 
+
+const remove = async (email) => {
+    
+    const person = await People.findOne({ where: { email: email}})
+
+    if(!person){
+        let message = "User not found!"
+        return message
+    }
+
+    await People.destroy({ where: {id_person: person.id_person}})
+    
+    let message = "User has been remove"
+    return message
+
+
+
+}
+
+const update = async (name, email, birth_date, event_choice = null) => {
+
+    const data = []
+    const person = await People.findOne({ where: {email: email}}) 
+
+    data.push(name, email, birth_date, event_choice)
+
+    for(let index in data){
+        if(data[index] == undefined){
+            continue
+        }else{
+            switch(index){
+
+                case "0":
+                    person.name_person = data[index]
+                    person.save()
+                    break
+
+                case "1":
+                    person.email = data[index]
+                    person.save()
+                    break
+
+                case "2":
+                    person.birth_date = new Date(birth_date)
+                    person.save()
+                    break
+
+                case "3":
+                    person.event_choice = data[index]
+                    person.save()
+                    break
+
+                default:
+                    break
+
+            }
+        }
+    }
+}
+
 module.exports = {
     register,
     getAll,
+    remove,
+    update
 }
