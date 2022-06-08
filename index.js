@@ -1,5 +1,5 @@
 const express = require('express');
-const req = require('express/lib/request');
+
 
 const app = express();
 app.use(express.json());
@@ -15,6 +15,10 @@ app.get('/database', database.connectionCheck)
 
 const personController = require('./services/controllers/personController/personController')
 app.use("/person", personController)
+
+
+const eventController = require('./services/controllers/eventController/eventController')
+app.use("/event", eventController)
 
 
 

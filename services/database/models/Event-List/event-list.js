@@ -8,8 +8,14 @@ const EventList = database.define("event_list",{
         allowNull: true,
         primaryKey: true,
     },
+    name_event:{
+        type: Sequelize.STRING(255)
+    },
     date_event:{
         type: Sequelize.DATE
+    },
+    time_event:{
+        type: Sequelize.TIME
     },
     event_description:{
         type: Sequelize.STRING(255)
@@ -20,3 +26,5 @@ const EventList = database.define("event_list",{
 
 
 }, { tableName: "event_list"})
+
+module.exports = EventList
