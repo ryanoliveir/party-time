@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
-
+app.use(express.static(__dirname + '/public'))
 
 //database
 const database = require('./services/database/connection-db')
@@ -19,6 +19,12 @@ app.use("/person", personController)
 
 const eventController = require('./services/controllers/eventController/eventController')
 app.use("/event", eventController)
+
+// pages
+
+const home = require('./routes/list_pages')
+app.use("/home", home)
+
 
 
 
