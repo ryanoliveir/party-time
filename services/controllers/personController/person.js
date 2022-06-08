@@ -5,11 +5,11 @@ const People = require('../../database/models/People/people')
 const register = async (name, emailAdress, birth_date, event_choice) => {
 
     const date = new Date(birth_date)
-    const events = JSON.stringify(event_choice[0])
+    //const events = JSON.stringify(event_choice[0])
     
-
-
-    console.log(name, emailAdress, date, events)
+    console.log(event_choice[1]);
+    var events = event_choice.toString()
+    console.log(name, emailAdress, events)
 
     //Verify email already exists in database...
 
@@ -61,7 +61,7 @@ const remove = async (email) => {
 
 const update = async (name, email, birth_date, event_choice) => {
 
-    const events = JSON.stringify(event_choice[0])
+    const events = event_choice.toString()
     const data = []
     const person = await People.findOne({ where: {email: email}}) 
 
