@@ -19,7 +19,7 @@ const People = database.define("people", {
         type: Sequelize.DATE
     },
     event_choice:{
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(255),
         allowNull: true,
     }
 

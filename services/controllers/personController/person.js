@@ -2,10 +2,14 @@ const database = require('../../database/db')
 const People = require('../../database/models/People/people')
 
 
-const register = async (name, emailAdress, birth_date, event_choice = null) => {
+const register = async (name, emailAdress, birth_date, event_choice) => {
 
-    date = new Date(birth_date)
-    console.log(name, emailAdress, date, event_choice)
+    const date = new Date(birth_date)
+    const events = JSON.stringify(event_choice[0])
+    
+
+
+    console.log(name, emailAdress, date, events)
 
     //Verify email already exists in database...
 
@@ -16,7 +20,7 @@ const register = async (name, emailAdress, birth_date, event_choice = null) => {
             name_person: name,
             email: emailAdress,
             birth_date: date,
-            event_choice: event_choice
+            event_choice: events
         })
 
         await database.sync()
@@ -55,12 +59,13 @@ const remove = async (email) => {
 
 }
 
-const update = async (name, email, birth_date, event_choice = null) => {
+const update = async (name, email, birth_date, event_choice) => {
 
+    const events = JSON.stringify(event_choice[0])
     const data = []
     const person = await People.findOne({ where: {email: email}}) 
 
-    data.push(name, email, birth_date, event_choice)
+    data.push(name, email, birth_date, events)
 
     for(let index in data){
         if(data[index] == undefined){
@@ -96,9 +101,22 @@ const update = async (name, email, birth_date, event_choice = null) => {
     }
 }
 
+
+const events = async (email) => {
+
+    const person = await People.findOne({ where: { email: email}})
+
+    const choice = person.event_choice 
+
+    return choice
+
+
+}
+
 module.exports = {
     register,
     getAll,
     remove,
-    update
+    update,
+    events
 }

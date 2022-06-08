@@ -9,7 +9,7 @@ const person = require('./person')
 
 
 router.post('/register', async (req, res) => {
-   const { name, emailAddress, birth_date, event_choice = null } = req.body
+   const { name, emailAddress, birth_date, event_choice} = req.body
 
    person.register(name, emailAddress, birth_date, event_choice)
 
@@ -38,6 +38,17 @@ router.put('/update', async (req, res) => {
    await person.update(name, emailAddress, birth_date, event_choice)
 
    res.status(200).end()
+})
+
+
+
+router.get('/choice', async (req, res) => {
+      const { emailAddress } = req.body
+
+      const choice = await person.events(emailAddress)
+      const events = JSON.parse(choice)
+
+      res.json({"events": events})
 })
 
 module.exports = router
