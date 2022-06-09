@@ -9,11 +9,11 @@ const event = require('./event')
 
 router.post('/register', async (req, res) => {
     const { name, datetime, description, peopleNumber } = req.body
-    console.log(datetime)
-    
-    await event.register(name ,datetime, description, peopleNumber)
 
-    res.status(200).end()
+    
+    let message =  await event.register(name ,datetime, description, peopleNumber)
+
+    res.json({"message": message})
 
 })
 
@@ -36,10 +36,10 @@ router.delete('/remove', async (req, res) => {
 
 router.put('/update', async (req, res) => {
     const { name, datetime, description, peopleNumber } = req.body
+    console.log()
+    let message = await event.update(name, datetime, description, peopleNumber)
 
-    await event.update(name, datetime, description, peopleNumber)
-
-    res.status(200).end()
+    res.json({"message": message})
 })
 
 module.exports = router

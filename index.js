@@ -20,9 +20,11 @@ app.use("/person", personController)
 const eventController = require('./services/controllers/eventController/eventController')
 app.use("/event", eventController)
 
+const partipationController = require('./services/controllers/participationController/participationController')
+app.use("/participation", partipationController)
 // pages
 
-const home = require('./routes/list_pages')
+const home = require('./routes/pages')
 app.use("/home", home)
 
 

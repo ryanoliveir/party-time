@@ -3,10 +3,15 @@ const EventList = require('../../database/models/Event-List/event-list')
 
 const register = async (name, datetime, description, peopleNumber) => {
 
+    if(peopleNumber == 0 || peopleNumber == undefined){
+        let message = "An event must have at least one person!"
+        return message
+    }
+
     const date = new Date(datetime)
     
     const time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
-    const date_event = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay()
+    const date_event = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate()
     console.log(date_event)
     
     try {
@@ -20,9 +25,13 @@ const register = async (name, datetime, description, peopleNumber) => {
 
         await database.sync()
 
-        console.log("[+] Event created!")
+        let message = "Event created!"
+        return message
+
+
     }catch (err) {
-        console.error("[!] Something went wrong!" + err)
+        let message ="Something went wrong!" + err
+        return message
     }
 }
 
@@ -50,6 +59,12 @@ const remove = async (name) => {
 
 const update = async (name, datetime, description, peopleNumber) => {
     
+
+    if(peopleNumber == 0){
+        let message = "An event must have at least one person!"
+        return message
+    }
+
     const requestData = []
 
     const date = new Date(datetime)
@@ -101,6 +116,9 @@ const update = async (name, datetime, description, peopleNumber) => {
         }
 
     }
+
+    let message = "Event updated!"
+    return message
     
     
     
